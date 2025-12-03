@@ -77,17 +77,17 @@ export const HeroSection = () => {
 
             <div className="flex gap-4 justify-center lg:justify-start pt-4 animate-fade-up animation-delay-500">
               <Button variant="ghost" size="icon" className="hover:text-primary" asChild>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/in/nikhil-trivedi-ba435320/" target="_blank" rel="noopener noreferrer">
                   <Linkedin className="h-5 w-5" />
                 </a>
               </Button>
               <Button variant="ghost" size="icon" className="hover:text-primary" asChild>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/nikstrvd" target="_blank" rel="noopener noreferrer">
                   <Github className="h-5 w-5" />
                 </a>
               </Button>
               <Button variant="ghost" size="icon" className="hover:text-primary" asChild>
-                <a href="mailto:contact@nikhiltrivedi.com">
+                <a href="mailto:contact@nikstrvd123@gmail.com">
                   <Mail className="h-5 w-5" />
                 </a>
               </Button>
