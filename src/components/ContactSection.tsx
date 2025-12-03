@@ -4,23 +4,56 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 import emailjs from "@emailjs/browser";
 
 const EMAILJS_SERVICE_ID = "service_r81ryo4";
 const EMAILJS_TEMPLATE_ID = "template_jie9kp8";
 const EMAILJS_PUBLIC_KEY = "8-YI4JUwxBnrMgG_t";
 
+const contactSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(2, { message: "Name must be at least 2 characters" })
+    .max(100, { message: "Name must be less than 100 characters" }),
+  email: z
+    .string()
+    .trim()
+    .email({ message: "Please enter a valid email address" })
+    .max(255, { message: "Email must be less than 255 characters" }),
+  message: z
+    .string()
+    .trim()
+    .min(10, { message: "Message must be at least 10 characters" })
+    .max(1000, { message: "Message must be less than 1000 characters" }),
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
+
 export const ContactSection = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
+
+  const form = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: ContactFormData) => {
     setIsLoading(true);
 
     try {
@@ -28,9 +61,9 @@ export const ContactSection = () => {
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         {
-          from_name: formData.name,
-          from_email: formData.email,
-          message: formData.message,
+          from_name: data.name,
+          from_email: data.email,
+          message: data.message,
           to_name: "Nikhil Trivedi",
         },
         EMAILJS_PUBLIC_KEY
@@ -40,7 +73,7 @@ export const ContactSection = () => {
         title: "Message Sent!",
         description: "Thank you for reaching out. I'll get back to you soon.",
       });
-      setFormData({ name: "", email: "", message: "" });
+      form.reset();
     } catch (error) {
       console.error("EmailJS error:", error);
       toast({
@@ -129,55 +162,78 @@ export const ContactSection = () => {
           <div className="glass-card rounded-3xl p-8">
             <h3 className="text-xl font-semibold mb-6">Send a Message</h3>
             
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <Input
-                  placeholder="Your Name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required
-                  className="h-12 rounded-xl bg-secondary/50 border-0 focus:ring-2 focus:ring-primary"
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          placeholder="Your Name"
+                          {...field}
+                          className="h-12 rounded-xl bg-secondary/50 border-0 focus:ring-2 focus:ring-primary"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </div>
-              <div>
-                <Input
-                  type="email"
-                  placeholder="Your Email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  required
-                  className="h-12 rounded-xl bg-secondary/50 border-0 focus:ring-2 focus:ring-primary"
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="Your Email"
+                          {...field}
+                          className="h-12 rounded-xl bg-secondary/50 border-0 focus:ring-2 focus:ring-primary"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </div>
-              <div>
-                <Textarea
-                  placeholder="Your Message"
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  required
-                  rows={5}
-                  className="rounded-xl bg-secondary/50 border-0 focus:ring-2 focus:ring-primary resize-none"
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Your Message"
+                          {...field}
+                          rows={5}
+                          className="rounded-xl bg-secondary/50 border-0 focus:ring-2 focus:ring-primary resize-none"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </div>
-              <Button
-                type="submit"
-                size="lg"
-                disabled={isLoading}
-                className="w-full gradient-button text-primary-foreground font-semibold h-12"
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    Send Message
-                    <Send className="ml-2 h-5 w-5" />
-                  </>
-                )}
-              </Button>
-            </form>
+                <Button
+                  type="submit"
+                  size="lg"
+                  disabled={isLoading}
+                  className="w-full gradient-button text-primary-foreground font-semibold h-12"
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <Send className="ml-2 h-5 w-5" />
+                    </>
+                  )}
+                </Button>
+              </form>
+            </Form>
           </div>
         </div>
       </div>
