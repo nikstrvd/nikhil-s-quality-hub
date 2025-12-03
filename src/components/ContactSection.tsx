@@ -26,25 +26,25 @@ export const ContactSection = () => {
     {
       icon: Mail,
       label: "Email",
-      value: "nikhil.trivedi@email.com",
-      href: "mailto:nikhil.trivedi@email.com",
+      value: "nikstrvd123@gmail.com",
+      href: "mailto:nikstrvd123@gmail.com",
     },
     {
       icon: Phone,
       label: "Phone",
-      value: "+65 XXXX XXXX",
-      href: "tel:+65XXXXXXXX",
+      value: "+91 99131 42142",
+      href: "tel:+919913142142",
     },
     {
       icon: Linkedin,
       label: "LinkedIn",
-      value: "linkedin.com/in/nikhiltrivedi",
-      href: "https://linkedin.com/in/nikhiltrivedi",
+      value: "https://www.linkedin.com/in/nikhil-trivedi-ba435320/",
+      href: "https://www.linkedin.com/in/nikhil-trivedi-ba435320/",
     },
     {
       icon: MapPin,
       label: "Location",
-      value: "Singapore",
+      value: "India",
       href: "#",
     },
   ];
