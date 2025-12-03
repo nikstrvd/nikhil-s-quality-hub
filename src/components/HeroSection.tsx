@@ -1,6 +1,7 @@
 import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import profilePhoto from "@/assets/profile-photo.png";
+import { motion } from "framer-motion";
 
 export const HeroSection = () => {
   return (
@@ -14,27 +15,47 @@ export const HeroSection = () => {
       <div className="absolute bottom-20 left-20 w-72 h-72 bg-accent/20 rounded-full blur-3xl" />
 
       {/* Floating icons */}
-      <div className="absolute top-32 right-[15%] floating-animation hidden lg:block">
+      <motion.div 
+        className="absolute top-32 right-[15%] floating-animation hidden lg:block"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.8, duration: 0.5 }}
+      >
         <div className="glass-card p-4 rounded-2xl">
           <Github className="h-8 w-8 text-primary" />
         </div>
-      </div>
-      <div className="absolute top-48 right-[8%] floating-animation-delayed hidden lg:block">
+      </motion.div>
+      <motion.div 
+        className="absolute top-48 right-[8%] floating-animation-delayed hidden lg:block"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 1, duration: 0.5 }}
+      >
         <div className="glass-card p-4 rounded-2xl">
           <Mail className="h-8 w-8 text-accent" />
         </div>
-      </div>
-      <div className="absolute bottom-32 right-[12%] floating-animation hidden lg:block">
+      </motion.div>
+      <motion.div 
+        className="absolute bottom-32 right-[12%] floating-animation hidden lg:block"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 1.2, duration: 0.5 }}
+      >
         <div className="glass-card p-4 rounded-2xl">
           <Linkedin className="h-8 w-8 text-primary" />
         </div>
-      </div>
+      </motion.div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
-          <div className="text-center lg:text-left space-y-6">
-            <div className="animate-fade-up">
+          <motion.div 
+            className="text-center lg:text-left space-y-6"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div>
               <span className="inline-block px-4 py-2 glass-card rounded-full text-sm font-medium text-primary mb-4">
                 👋 Welcome to my portfolio
               </span>
@@ -92,10 +113,15 @@ export const HeroSection = () => {
                 </a>
               </Button>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Content - Profile Image */}
-          <div className="relative flex justify-center lg:justify-end animate-scale-in animation-delay-200">
+          <motion.div 
+            className="relative flex justify-center lg:justify-end"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          >
             <div className="relative">
               {/* Decorative ring */}
               <div className="absolute inset-0 gradient-bg rounded-full blur-2xl opacity-30 scale-110" />
@@ -110,14 +136,19 @@ export const HeroSection = () => {
               </div>
 
               {/* Info card */}
-              <div className="absolute -bottom-4 -right-4 md:bottom-8 md:-right-8 glass-card rounded-2xl p-4 max-w-[200px]">
+              <motion.div 
+                className="absolute -bottom-4 -right-4 md:bottom-8 md:-right-8 glass-card rounded-2xl p-4 max-w-[200px]"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.5 }}
+              >
                 <p className="text-sm font-semibold text-primary">— QA Expert</p>
                 <p className="text-xs text-muted-foreground mt-1">
                   Specialized in Manual & API Testing with 10+ years of experience.
                 </p>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

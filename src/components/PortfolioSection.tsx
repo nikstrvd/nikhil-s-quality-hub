@@ -1,5 +1,6 @@
 import { ExternalLink, Building2, GraduationCap, Gem, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 const projects = [
   {
@@ -42,20 +43,30 @@ export const PortfolioSection = () => {
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-16">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           <span className="inline-block px-4 py-2 glass-card rounded-full text-sm font-medium text-primary mb-4">
             Portfolio
           </span>
           <h2 className="text-3xl md:text-4xl font-bold">
             Featured <span className="gradient-text">Projects</span>
           </h2>
-        </div>
+        </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <div
+            <motion.div
               key={project.title}
               className="glass-card rounded-3xl p-8 group hover:scale-[1.02] transition-all duration-300"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="flex items-start justify-between mb-6">
                 <div className="flex items-center gap-4">
@@ -84,7 +95,7 @@ export const PortfolioSection = () => {
                   <p className="text-sm text-muted-foreground">{project.impact}</p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

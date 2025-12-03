@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import emailjs from "@emailjs/browser";
+import { motion } from "framer-motion";
 
 const EMAILJS_SERVICE_ID = "service_r81ryo4";
 const EMAILJS_TEMPLATE_ID = "template_jie9kp8";
@@ -118,18 +119,30 @@ export const ContactSection = () => {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-16">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           <span className="inline-block px-4 py-2 glass-card rounded-full text-sm font-medium text-primary mb-4">
             Contact
           </span>
           <h2 className="text-3xl md:text-4xl font-bold">
             Let's Work <span className="gradient-text">Together</span>
           </h2>
-        </div>
+        </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
           {/* Contact Info */}
-          <div className="space-y-6">
+          <motion.div 
+            className="space-y-6"
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
             <div className="glass-card rounded-3xl p-8">
               <h3 className="text-xl font-semibold mb-6">Get in Touch</h3>
               <p className="text-muted-foreground mb-8">
@@ -137,13 +150,17 @@ export const ContactSection = () => {
               </p>
               
               <div className="space-y-4">
-                {contactInfo.map((item) => (
-                  <a
+                {contactInfo.map((item, index) => (
+                  <motion.a
                     key={item.label}
                     href={item.href}
                     target={item.href.startsWith("http") ? "_blank" : undefined}
                     rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
                     className="flex items-center gap-4 p-4 rounded-2xl bg-secondary/50 hover:bg-secondary transition-colors group"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
                   >
                     <div className="w-12 h-12 gradient-button rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                       <item.icon className="h-5 w-5 text-primary-foreground" />
@@ -152,14 +169,20 @@ export const ContactSection = () => {
                       <p className="text-sm text-muted-foreground">{item.label}</p>
                       <p className="font-medium">{item.value}</p>
                     </div>
-                  </a>
+                  </motion.a>
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Contact Form */}
-          <div className="glass-card rounded-3xl p-8">
+          <motion.div 
+            className="glass-card rounded-3xl p-8"
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          >
             <h3 className="text-xl font-semibold mb-6">Send a Message</h3>
             
             <Form {...form}>
@@ -234,7 +257,7 @@ export const ContactSection = () => {
                 </Button>
               </form>
             </Form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
