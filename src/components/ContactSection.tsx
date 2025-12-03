@@ -1,25 +1,56 @@
 import { useState } from "react";
-import { Mail, Phone, Linkedin, Send, MapPin } from "lucide-react";
+import { Mail, Phone, Linkedin, Send, MapPin, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import emailjs from "@emailjs/browser";
+
+const EMAILJS_SERVICE_ID = "service_r81ryo4";
+const EMAILJS_TEMPLATE_ID = "template_jie9kp8";
+const EMAILJS_PUBLIC_KEY = "8-YI4JUwxBnrMgG_t";
 
 export const ContactSection = () => {
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for reaching out. I'll get back to you soon.",
-    });
-    setFormData({ name: "", email: "", message: "" });
+    setIsLoading(true);
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+          to_name: "Nikhil Trivedi",
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+
+      toast({
+        title: "Message Sent!",
+        description: "Thank you for reaching out. I'll get back to you soon.",
+      });
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error("EmailJS error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const contactInfo = [
@@ -131,10 +162,20 @@ export const ContactSection = () => {
               <Button
                 type="submit"
                 size="lg"
+                disabled={isLoading}
                 className="w-full gradient-button text-primary-foreground font-semibold h-12"
               >
-                Send Message
-                <Send className="ml-2 h-5 w-5" />
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    Send Message
+                    <Send className="ml-2 h-5 w-5" />
+                  </>
+                )}
               </Button>
             </form>
           </div>
