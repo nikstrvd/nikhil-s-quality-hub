@@ -9,6 +9,7 @@ import {
   ArrowRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 const services = [
   {
@@ -54,20 +55,30 @@ export const ServicesSection = () => {
       <div className="absolute top-1/2 left-0 w-72 h-72 bg-primary/10 rounded-full blur-3xl -translate-y-1/2" />
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-16">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           <span className="inline-block px-4 py-2 glass-card rounded-full text-sm font-medium text-primary mb-4">
             Services
           </span>
           <h2 className="text-3xl md:text-4xl font-bold">
             What I <span className="gradient-text">Offer</span>
           </h2>
-        </div>
+        </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {services.map((service, index) => (
-            <div
+            <motion.div
               key={service.title}
               className="glass-card rounded-3xl p-6 group hover:scale-105 transition-all duration-300 hover:shadow-glow"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="w-14 h-14 gradient-button rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                 <service.icon className="h-7 w-7 text-primary-foreground" />
@@ -82,7 +93,7 @@ export const ServicesSection = () => {
                 Learn More 
                 <ArrowRight className="ml-1 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
               </Button>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

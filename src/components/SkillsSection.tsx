@@ -6,6 +6,7 @@ import {
   Monitor,
   Cloud
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 const skillCategories = [
   {
@@ -64,21 +65,30 @@ export const SkillsSection = () => {
       <div className="absolute bottom-0 right-0 w-80 h-80 bg-accent/10 rounded-full blur-3xl" />
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-16">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           <span className="inline-block px-4 py-2 glass-card rounded-full text-sm font-medium text-primary mb-4">
             My Skills
           </span>
           <h2 className="text-3xl md:text-4xl font-bold">
             Technical <span className="gradient-text">Expertise</span>
           </h2>
-        </div>
+        </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {skillCategories.map((category, index) => (
-            <div
+            <motion.div
               key={category.title}
               className="glass-card rounded-3xl p-6 hover:scale-105 transition-transform duration-300 group"
-              style={{ animationDelay: `${index * 100}ms` }}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="flex items-center gap-4 mb-5">
                 <div className="w-12 h-12 gradient-button rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -98,7 +108,7 @@ export const SkillsSection = () => {
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
