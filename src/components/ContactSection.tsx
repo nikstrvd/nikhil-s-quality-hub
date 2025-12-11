@@ -66,6 +66,7 @@ export const ContactSection = () => {
           from_email: data.email,
           message: data.message,
           to_name: "Nikhil Trivedi",
+          to_email: "nikstrvd123@gmail.com",
         },
         EMAILJS_PUBLIC_KEY
       );
