@@ -94,6 +94,17 @@ export const HeroSection = () => {
               >
                 <a href="#contact">Contact Me</a>
               </Button>
+              <Button
+                size="lg"
+                variant="secondary"
+                className="font-semibold"
+                asChild
+              >
+                <a href="/Nikhil_Trivedi_Resume.pdf" download>
+                  <Download className="mr-2 h-5 w-5" />
+                  Download CV
+                </a>
+              </Button>
             </div>
 
             <div className="flex gap-4 justify-center lg:justify-start pt-4 animate-fade-up animation-delay-500">
