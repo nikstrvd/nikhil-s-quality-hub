@@ -40,3 +40,14 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Hide Lovable floating badge */
+.lovable-edit-badge,
+[id*="lovable-edit"],
+div[style*="lovable"],
+a[href*="lovable.dev"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
