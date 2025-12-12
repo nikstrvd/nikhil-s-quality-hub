@@ -178,3 +178,10 @@
 .animation-delay-300 { animation-delay: 0.3s; }
 .animation-delay-400 { animation-delay: 0.4s; }
 .animation-delay-500 { animation-delay: 0.5s; }
+
+/* Hide Lovable floating edit badge */
+#lovable-edit-badge, 
+.lovable-edit-badge, 
+div[id*="lovable"] {
+    display: none !important;
+}
