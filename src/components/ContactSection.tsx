@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Mail, Phone, Linkedin, Send, MapPin, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,10 +16,12 @@ import {
 } from "@/components/ui/form";
 import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const EMAILJS_SERVICE_ID = "service_r81ryo4";
 const EMAILJS_TEMPLATE_ID = "template_jie9kp8";
 const EMAILJS_PUBLIC_KEY = "8-YI4JUwxBnrMgG_t";
+const RECAPTCHA_SITE_KEY = "YOUR_RECAPTCHA_SITE_KEY"; // Replace with your actual site key
 
 const contactSchema = z.object({
   name: z
@@ -44,6 +46,8 @@ type ContactFormData = z.infer<typeof contactSchema>;
 export const ContactSection = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
@@ -54,7 +58,20 @@ export const ContactSection = () => {
     },
   });
 
+  const onCaptchaChange = (token: string | null) => {
+    setCaptchaToken(token);
+  };
+
   const onSubmit = async (data: ContactFormData) => {
+    if (!captchaToken) {
+      toast({
+        title: "Verification Required",
+        description: "Please complete the reCAPTCHA verification.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -76,6 +93,8 @@ export const ContactSection = () => {
         description: "Thank you for reaching out. I'll get back to you soon.",
       });
       form.reset();
+      setCaptchaToken(null);
+      recaptchaRef.current?.reset();
     } catch (error) {
       console.error("EmailJS error:", error);
       toast({
@@ -238,10 +257,18 @@ export const ContactSection = () => {
                     </FormItem>
                   )}
                 />
+                <div className="flex justify-center">
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey={RECAPTCHA_SITE_KEY}
+                    onChange={onCaptchaChange}
+                    theme="dark"
+                  />
+                </div>
                 <Button
                   type="submit"
                   size="lg"
-                  disabled={isLoading}
+                  disabled={isLoading || !captchaToken}
                   className="w-full gradient-button text-primary-foreground font-semibold h-12"
                 >
                   {isLoading ? (
