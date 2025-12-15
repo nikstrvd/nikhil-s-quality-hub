@@ -21,7 +21,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 const EMAILJS_SERVICE_ID = "service_r81ryo4";
 const EMAILJS_TEMPLATE_ID = "template_jie9kp8";
 const EMAILJS_PUBLIC_KEY = "8-YI4JUwxBnrMgG_t";
-const RECAPTCHA_SITE_KEY = "YOUR_RECAPTCHA_SITE_KEY"; // Replace with your actual site key
+const RECAPTCHA_SITE_KEY = "6LcOJCwsAAAAAMLFonPIsjjjIb5R9kLn6O5SvjMc";
 
 const contactSchema = z.object({
   name: z
