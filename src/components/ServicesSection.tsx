@@ -191,7 +191,11 @@ export const ServicesSection = () => {
       </div>
 
       <Dialog open={!!selectedService} onOpenChange={() => setSelectedService(null)}>
-        <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
+        <DialogContent 
+          className="max-w-lg max-h-[80vh] overflow-y-auto"
+          onPointerDownOutside={(e) => e.preventDefault()}
+          onInteractOutside={(e) => e.preventDefault()}
+        >
           {selectedService && (
             <>
               <DialogHeader>
